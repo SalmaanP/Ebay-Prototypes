@@ -1,0 +1,273 @@
+<html ng-app="ebay">
+
+<head>
+    <title>Product Details</title>
+
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+    <link href="/stylesheets/styles.css" rel="stylesheet">
+    <link href="/stylesheets/new.css" rel="stylesheet">
+    <link href="https://bootswatch.com/lumen/bootstrap.css" rel="stylesheet">
+
+
+</head>
+
+<body style="background-color: #ededed;" ng-controller="item_controller" ng-cloak>
+
+<nav class="navbar navbar-inverse" style="max-height: 25px">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                <!--<li style=" margin-left:55px"><a ng-href="/profile/{{user_handle}}">Hi {{user_name}}!</a></li>-->
+                <li><a href='/postAd' ng-click="navtopostAd()" style=" font-weight:bold; margin-left:55px;">Post Your
+                        Ad!</a></li>
+
+
+                <a class="navbar-brand" style="margin-left:200px; position:relative; left:20px; bottom:10px;"
+                   href="/" ng-click="navtoRoot()"><img src="/images/logo_128_new_test.png"></a>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+
+                        <input type="text" style="width:400px" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My
+                        eBay<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a ng-click="navtoprofile()" ng-href="/profile/{{user_handle}}">{{user_name}}'s
+                                Profile</a></li>
+                        <li><a href="/myAds" ng-click="navtomyads()">Your Advertisements</a></li>
+                        <li><a href="/myBids" ng-click="navtomybids()">Bids</a></li>
+                        <li><a href="/myOrders" ng-click="navtomyorders()">Orders</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/profile/{{user_handle}}#login_activity">Login Activity</a></li>
+
+                    </ul>
+                </li>
+                <!--<li><a href="/cart">Cart<i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>-->
+                <li class="active"><a href='/cart' ng-click="navtoCart()">Cart<img style="height: 18px; width:20px;"
+                                                                                   src="/images/cart.png"
+                                                                                   aria-hidden="true"></img></a></li>
+                <li data-toggle="tooltip" title=":("><a href="/signOut" ng-click="navtosignout()">Sign Out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="global-wrapper clearfix" id="global-wrapper">
+
+
+    <div class="container">
+        <div class="gap"></div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="row">
+
+                    <img class="product-img" style="width: 157px; height: 315px; margin-left:200px;"
+                         src="/images/product.png" alt="Shiny, right?"
+                         title="Image Title">
+
+                </div>
+            </div>
+            <div class="col-md-8">
+
+                <div class="col-md-4" style="font: 300 1.25em/1.4 'Lato', sans-serif" ;>
+
+
+                    <h1 ng-bind="item_name"></h1>
+
+
+                    <p class="product-caption-title" style="height:auto;padding-top:10px"
+                       ng-bind="item_description"></p>
+
+                    <p class="product-page-price" ng-show="for_buy || (for_buy && out_of_stock)"
+                       style="margin-top:50px">$ {{item_price}}</p>
+
+                    <div ng-show="for_bid || (for_bid && out_of_stock)">
+                        <div class="product-page-price"
+                             style="font-size:25px;margin-top:30px">Bid: $ {{max_bid}}+
+                        </div>
+
+                        <div class="product-page-price"
+                             style="font-size:15px; margin-top:20px">Base Price: $ {{item_price}}
+                        </div>
+
+                        <div ng-show="!out_of_stock" style="font-size: 10px; margin-top:30px;">Bid Ending in: {{bid_end}}</div>
+                        <div ng-show="out_of_stock" style="font-size: 15px; margin-top:30px;">Out of Stock!</div>
+                    </div>
+
+
+                    <br><br><br>
+                    <ul class="product-page-actions-list">
+
+                        <li class="product-page-qty-item">
+
+                            <input style="width:80px" class="product-page-qty product-page-qty-input" type="number"
+                                   value="1" ng-show="seller_handle != user_handle"
+                                   ng-model="user_input"/>
+
+                        </li>
+                        <li>
+                            <button style="font-size:12px" class="btn btn-sm btn-primary" ng-click="button_click()"
+                                    ng-bind="button_text" ng-show="seller_handle != user_handle" ><i
+                                        class="fa fa-shopping-cart"></i></button>
+                        </li>
+
+                    </ul>
+                    <div style="margin-top:10px" ng-show="lessbid" class="alert alert-warning" role="alert">
+                       Your bid is lower than current bid.
+                    </div>
+                    <div style="margin-top:10px" ng-show="lessquantity" class="alert alert-warning" role="alert">
+                       Please check quantity, and try again.
+                    </div>
+                    <div style="margin-top:10px" ng-show="item_added" class="alert alert-success" role="alert">
+                       Item added to cart successfully, will reflect momentarily.
+                    </div>
+                </div>
+                <div class="col-md-8">
+
+                    <div class="tabbable product-tabs">
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li ng-show="for_buy || (for_buy && out_of_stock)" class="active"><a href="#tab-1"
+                                                                                                 data-toggle="tab">Product
+                                    Information</a></li>
+                            <li ng-show="for_bid || (for_bid && out_of_stock)" class="active"><a href="#tab-3"
+                                                                                                 data-toggle="tab">Past
+                                    Bids</a>
+                            </li>
+                            <li><a href="#tab-2" data-toggle="tab">Seller Information</a>
+
+                            </li>
+
+                        </ul>
+                        <div class="tab-content">
+
+                            <div class="tab-pane fade in active" ng-show="for_bid || (for_bid && out_of_stock)"
+                                 id="tab-3">
+
+                                <div ng-hide="nobids">
+
+                                    <div class="row1 header blue">
+                                        <div class="cell1">
+                                            Bid Amount
+                                        </div>
+                                        <div class="cell1">
+                                            Date
+                                        </div>
+                                        <div class="cell1">
+                                            Bid By
+                                        </div>
+                                    </div>
+                                    <div class="row1" ng-repeat="bid in bids">
+                                        <div class="cell1">
+                                            {{bid.bid_price}}
+                                        </div>
+                                        <div class="cell1">
+                                            {{bid.date | date:'shortTime'}} - {{bid.date | date:'fullDate'}}
+                                        </div>
+                                        <div class="cell1">
+                                            {{bid.buyer_handle}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="nobids">
+
+                                    <h3>No Bids Yet, be the first to bid!</h3>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="tab-pane fade in active" ng-show="for_buy || (for_buy && out_of_stock)"
+                                 id="tab-1">
+                                <ul style="font-size: 15px">
+
+                                    <li style="margin-bottom: 10px">Quantity Available: {{item_quantity}}</li>
+                                    <li>Added on: {{item_date | date:'fullDate'}}</li>
+                                </ul>
+                            </div>
+
+
+                            <div class="tab-pane fade" id="tab-2">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td>Sold By</td>
+
+                                        <td>{{seller_name}}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Shipped From</td>
+                                        <td ng-bind="seller_address"></td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="/javascripts/ebay_angular.js"></script>
+
+<!--<script src="js/icheck.js"></script>-->
+<!--<script src="js/ionrangeslider.js"></script>-->
+<!--<script src="js/jqzoom.js"></script>-->
+<!--<script src="js/card-payment.js"></script>-->
+<!--<script src="js/owl-carousel.js"></script>-->
+<!--<script src="js/magnific.js"></script>-->
+<!--<script src="js/custom.js"></script>-->
+
+
+</body>
+
+
+</html>

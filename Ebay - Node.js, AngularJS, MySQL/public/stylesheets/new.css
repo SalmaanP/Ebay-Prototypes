@@ -1,0 +1,269 @@
+.cards {
+    margin: 1rem auto;
+    padding: 1em auto;
+    max-width: 100%;
+    text-align: center;
+}
+.card {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    width: 350px;
+    max-height: 300px;
+    margin: 0.5rem;
+    text-align: left;
+    cursor: pointer;
+}
+.card-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,10,0.1);
+}
+.card-content {
+    position: relative;
+    padding: 2rem;
+}
+.label {
+    display: block;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+.title {
+    margin: 1em 0;
+    display: block;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #aaa;
+}
+.description {
+    margin: 0;
+    color: #808080 ;
+    line-height: 1.5;
+}
+
+
+.wrapper {
+    margin: 0 auto;
+    padding: 40px;
+
+}
+
+.table1 {
+    margin: 0 0 40px 0;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    display: table;
+}
+@media screen and (max-width: 580px) {
+    .table1 {
+        display: block;
+    }
+}
+
+.row1 {
+    display: table-row;
+    background: #f6f6f6;
+}
+.row1:nth-of-type(odd) {
+    background: #e9e9e9;
+}
+.row1.header {
+    font-weight: 900;
+    color: #ffffff;
+    background: #ea6153;
+}
+.row1.green {
+    background: #27ae60;
+}
+.row1.blue {
+    background: #2980b9;
+}
+@media screen and (max-width: 580px) {
+    .row1 {
+        padding: 8px 0;
+        display: block;
+    }
+}
+
+.cell1 {
+    padding: 6px 12px;
+    display: table-cell;
+}
+@media screen and (max-width: 580px) {
+    .cell1 {
+        padding: 2px 12px;
+        display: block;
+    }
+}
+
+
+/*FOR ITEM DETAIL*/
+
+
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+body {
+    background-color: #f7f7f7;
+    margin: 1em auto;
+    /*background-size: cover;*/
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #3399ff;
+}
+
+#qt {
+    color: #999999;
+}
+
+p .fa[class~=angle] {
+    font-size: 1.3rem;
+    position: relative;
+    top: 0.15rem;
+    margin: 0 20px;
+    cursor: pointer;
+    color: #d8d8d8;
+    transition: all .5s;
+}
+p .fa[class~=angle]:hover {
+    color: #47be73;
+}
+
+.yellow {
+    color: #fecb6c;
+}
+
+.product {
+    height: 400px;
+    width: inherit;
+    background: white;
+    position: inherit;
+    padding: 3em;
+
+    margin-top: 20px;
+}
+.product.action {
+    animation: bounce 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+.product .header {
+    height: 40px;
+    position: relative;
+    padding: 20px;
+}
+.product .header .back {
+    position: relative;
+    width: 0px;
+    height: 0px;
+    border-top: 30px solid #47be73;
+    border-bottom: 30px solid transparent;
+    border-left: 30px solid #47be73;
+    border-right: 30px solid transparent;
+}
+.product .header .back:before {
+    content: "←";
+    position: absolute;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.3rem;
+    font-weight: bold;
+    top: -22px;
+    left: -22px;
+}
+.product .main {
+
+}
+.product .main .quantity {
+    margin-top: 40px;
+    color: #333;
+}
+.product .main h1 {
+    font-size: 4.5rem;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    color: #232e3a;
+    margin: 0 0;
+
+}
+.product .main h2 {
+    color: #999999;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    margin: 0 0;
+    text-transform: uppercase;
+    padding-left: 0.5em
+}
+.product .main h3 {
+    color: #232e3a;
+    margin: 0;
+    padding-left: 0.5em;
+    padding-top:0.5em;
+}
+.product .main img {
+    max-width: 80%;
+    margin-left: -25px;
+    margin-top: 25px;
+}
+.product .main .left,
+.product .main .right {
+    width: 40%;
+    padding: 0 calc(5% - 1px);
+}
+.product .main .right {
+    color: #999;
+    font-size: 1.5rem;
+    line-height: 1.5;
+}
+.product .footer1 {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 1em;
+    padding: 5px 40px 5px 0;
+    width: calc(90% - 40px);
+    left: 10%;
+    border-top: 1px solid #ccc;
+}
+.product .footer1 .left p:before {
+    content: "Total Price";
+    text-transform: uppercase;
+    font-size: .7rem;
+    color: black;
+    padding: 2em;
+    position: absolute;
+    top: -12px;
+    width: 200%;
+}
+.product .footer1 p {
+    color: #47be73;
+    position: relative;
+    font-size: 1.5rem;
+}
+
+.left {
+    float: left;
+    margin-left: 7em;
+}
+
+.right {
+    float: right;
+    margin-right: 7em;
+}
+
+@keyframes bounce {
+    50% {
+        transform: translateX(10px);
+    }
+}
+
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
+}
+
+

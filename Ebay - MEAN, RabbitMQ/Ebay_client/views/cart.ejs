@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ebay">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Orders</title>
+
+    <!--<link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet'-->
+    <!--type='text/css'>-->
+
+    <!--<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>-->
+
+
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+    <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link href="/fonts/google_roboto.css" rel="stylesheet">
+    <link href="/fonts/google_sans.css" rel="stylesheet">
+    <link href="/stylesheets/bootstrap3.3.7.min.css" rel="stylesheet">
+    <link href="https://bootswatch.com/lumen/bootstrap.css" rel="stylesheet">
+
+
+    <link href="/stylesheets/cart.css" rel="stylesheet">
+
+    <!--<link href="/stylesheets/styles.css" rel="stylesheet">-->
+    <!--<link href="/stylesheets/new.css" rel="stylesheet">-->
+
+
+</head>
+<body ng-controller="cart_controller" ng-cloak>
+
+<nav class="navbar navbar-inverse" style="max-height: 25px">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                <!--<li style=" margin-left:55px"><a ng-href="/profile/{{user_handle}}">Hi {{user_name}}!</a></li>-->
+                <li><a href='' ng-click="navtopostAd()" style=" font-weight:bold; margin-left:55px;">Post Your Ad!</a>
+                </li>
+
+
+                <a class="navbar-brand" style="margin-left:200px; position:relative; left:20px; bottom:10px;"
+                   href="" ng-click="navtoRoot()"><img src="/images/logo_128_new_test.png"></a>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+
+                        <input type="text" style="width:400px" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My
+                        eBay<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a ng-click="navtoprofile()" ng-href="/profile/{{user_handle}}">{{user_name}}'s Profile</a>
+                        </li>
+                        <li><a href="/myAds" ng-click="navtomyads()">Your Advertisements</a></li>
+                        <li><a href="/myBids" ng-click="navtomybids()">Bids</a></li>
+                        <li><a href="/myOrders" ng-click="navtomyorders()">Orders</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/profile/{{user_handle}}#login_activity">Login Activity</a></li>
+
+                    </ul>
+                </li>
+                <!--<li><a href="/cart">Cart<i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>-->
+                <li class="active"><a href='' ng-click="navtoCart()">Cart<img style="height: 18px; width:20px;"
+                                                                              src="/images/cart.png"
+                                                                              aria-hidden="true"></img></a></li>
+                <li data-toggle="tooltip" title=":("><a href="" ng-click="navtosignout()">Sign Out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="main" name="cart_screen" id="cart_screen" ng-hide="cart_empty || in_payment">
+    <h1>{{user_name}}'s Cart</h1>
+    <h2 class="sub-heading">Tax Free, for limited time!</h2>
+
+
+    <div class="container" style="width:60%; padding-top:1%">
+        <ol class="ui-list shopping-cart--list" id="shopping-cart--list">
+
+
+            <li class="_grid shopping-cart--list-item" style="height: auto" ng-repeat="item in cart">
+
+                <div class="_column product-info">
+                    <h4 class="product-name" style="margin:10px">{{item.item_name}} <span class="product-desc" style="margin-left:5%;font-size: 12px;color: #e74c3c;margin-top:30px">Only {{item.item.quantity}} available!</span></h4>
+                    <p class="product-desc" style="margin:10px">{{item.item_description}}</p>
+
+                    <span class="product-desc" ng-click="remove(item._id)" ng-show="item.item.quantity == 0" style="color: #e74c3c;margin-top:30px">Item not in stock, remove from stock?</span>
+
+                    <div class="price product-single-price" style="width:auto;">${{item.item_price}}</div>
+
+                </div>
+                <div class="_column product-modifiers" data-product-price="{{item.item_price}}">
+                    <div class="_grid">
+
+                        <button class="_btn _column product-subtract"
+                                ng-click="edit(item._id,-1, item.item.quantity, item.item_quantity)">&minus;</button>
+
+                        <div class="_column product-qty">{{item.item_quantity}}</div>
+                        <a ng-click="edit(item._id,1, item.item.quantity, item.item_quantity)">
+                            <button class="_btn _column product-plus">&plus;</button>
+                        </a>
+                    </div>
+                    <button class="_btn entypo-trash product-remove" ng-click="remove(item._id)">Remove</button>
+                    <div class="price product-total-price">${{item.item_quantity * item.item_price}}</div>
+                </div>
+            </li>
+
+
+        </ol>
+
+        <footer class="_grid cart-totals">
+            <div class="_column subtotal" id="subtotalCtr">
+                <div class="cart-totals-key">Subtotal</div>
+                <div class="cart-totals-value">${{total_before_shipping}}</div>
+            </div>
+            <div class="_column shipping" id="shippingCtr">
+                <div class="cart-totals-key">Shipping</div>
+                <div class="cart-totals-value">$5.00</div>
+            </div>
+
+            <div class="_column total" id="totalCtr">
+                <div class="cart-totals-key">Total</div>
+                <div class="cart-totals-value">${{total}}</div>
+            </div>
+            <div class="_column checkout">
+                <a href="#payment">
+                    <button class="_btn checkout-btn entypo-forward" ng-click="pay()">Checkout</button>
+                </a>
+            </div>
+        </footer>
+
+    </div>
+</div>
+
+
+<div ng-hide="!cart_empty">
+
+    <i class="fa fa-shopping-cart" style="text-align:center;width:100%;margin:auto; font-size: 400px"
+       aria-hidden="true"></i>
+    <br>
+    <a style="text-decoration: none" href="/"><h3 style="text-align:center">No Items in Cart!
+            <br>Click Here to go shopping!</h3></a>
+</div>
+
+
+<div ng-show="in_payment" style="margin-top: 5%">
+
+    <h1 class="h1_credit">Total<span id="payment" class="span_credit">{{total}}</span><i class="fa fa-lock"></i></h1>
+    <div id="container" class="container_credit">
+        <form class="form_credit" ng-submit="checkout()" name="credit_card_form">
+            <p class="p_credit">
+                <label class="label_credit">Name On Card</label>
+                <input type="text" placeholder="Super Awesome Customer" class="input_credit" ng-required="true"/>
+            </p>
+            <p class="p_credit">
+                <label class="label_credit">Card Number</label>
+                <input type="text" placeholder="1234 5678 9012 3456" class="input_credit" pattern="[0-9]{16}"
+                       ng-required="true"/>
+            </p>
+            <p class="p_credit">
+                <label class="label_credit">CVV</label>
+                <input type="text" placeholder="XYZ" class="input_credit" pattern="[0-9]{3}" ng-required="true"/>
+            </p>
+            <div class="alert alert-success" ng-show="payment_done" role="alert"> Success!, lets go back for some more
+                shopping!
+            </div>
+            <div class="alert alert-danger" ng-show="payment_failed" role="alert"> Uh-oh!, something went wrong,
+                reloading for you.
+            </div>
+            <input type="submit" value="Get me my items!" class="input_credit"/>
+        </form>
+    </div>
+
+</div>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script src="./javascripts/ebay_angular.js"></script>
+
+
+</body>
+</html>

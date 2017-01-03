@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ebay">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Orders</title>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet'
+          type='text/css'>
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet'
+          type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+    <link href="/stylesheets/styles.css" rel="stylesheet">
+    <link href="/stylesheets/new.css" rel="stylesheet">
+    <link href="https://bootswatch.com/lumen/bootstrap.css" rel="stylesheet">
+
+
+</head>
+<body style="background-color: #ededed;" ng-controller="order_history_controller" ng-cloak>
+
+<div class="global-wrapper clearfix" id="global-wrapper">
+
+    <nav class="navbar navbar-inverse" style="max-height: 25px">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+                <ul class="nav navbar-nav">
+                    <!--<li style=" margin-left:55px"><a ng-href="/profile/{{user_handle}}">Hi {{user_name}}!</a></li>-->
+                    <li><a href='/postAd' ng-click="navtopostAd()" style=" font-weight:bold; margin-left:55px;">Post Your Ad!</a></li>
+
+
+                    <a class="navbar-brand" style="margin-left:200px; position:relative; left:20px; bottom:10px;"
+                       href="/" ng-click="navtoRoot()"><img src="/images/logo_128_new_test.png"></a>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+
+                            <input type="text" style="width:400px" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </form>
+
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My
+                            eBay<span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a ng-click="navtoprofile()" ng-href="/profile/{{user_handle}}">{{user_name}}'s Profile</a></li>
+                            <li><a href="/myAds"  ng-click="navtomyads()">Your Advertisements</a></li>
+                            <li><a href="/myBids"  ng-click="navtomybids()">Bids</a></li>
+                            <li><a href="/myOrders" ng-click="navtomyorders()">Orders</a></li>
+                            <li class="divider"></li>
+                            <li><a href="/profile/{{user_handle}}#login_activity">Login Activity</a></li>
+
+                        </ul>
+                    </li>
+                    <!--<li><a href="/cart">Cart<i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>-->
+                    <li class="active"><a href='/cart' ng-click="navtoCart()">Cart<img style="height: 18px; width:20px;" src="/images/cart.png"
+                                                                                  aria-hidden="true"></img></a></li>
+                    <li data-toggle="tooltip" title=":("><a href="/signout" ng-click="navtosignout()">Sign Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--SEARCH-->
+
+
+    <div class="gap"></div>
+    <div style="width:10%;margin:auto;"><h2 style="line-height: 1em; color: #555; font-size: 1.625em;">Your Orders</h2></div>
+    <hr style="color: #DDD; margin: 20px 0;">
+
+
+
+    <div class="wrapper" style="width:90%;margin:auto;">
+
+        <div class="table1">
+
+            <div class="row1 header green">
+                <div class="cell1">
+                    Name
+                </div>
+                <div class="cell1">
+                    Description
+                </div>
+                <div class="cell1">
+                    Quantity
+                </div>
+                <div class="cell1">
+                    Price
+                </div>
+                <div class="cell1">
+                    Date
+                </div>
+                <div class="cell1">
+                    Sold By
+                </div>
+
+            </div>
+
+            <div class="row1" ng-repeat="order in orders">
+                <a ng-href="/advertisements/{{order.id}}" style="text-decoration: none; color: inherit">
+                <div class="cell1">
+                    {{order.item_name}}
+                </div>
+                </a>
+                <div class="cell1">
+                    {{order.item_description}}
+                </div>
+                <div class="cell1">
+                    {{order.quantity}}
+                </div>
+                <div class="cell1">
+                    ${{order.final_price}}
+                </div>
+                <div class="cell1">
+                    {{order.date | date:'fullDate'}}
+                </div>
+                <a ng-href="/profile/{{order.seller.handle}}" style="text-decoration: none; color: inherit">
+                <div class="cell1">
+                    {{order.seller.handle}}
+                </div>
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script src="./javascripts/ebay_angular.js"></script>
+
+
+</body>
+</html>

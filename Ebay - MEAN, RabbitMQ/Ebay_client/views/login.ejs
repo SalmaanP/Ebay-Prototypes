@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ebay">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    <script src="http://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link href="/fonts/google_roboto.css" rel="stylesheet">
+    <link href="/fonts/google_sans.css" rel="stylesheet">
+    <link href="/stylesheets/bootstrap3.3.7.min.css" rel="stylesheet">
+    <link href="https://bootswatch.com/lumen/bootstrap.css" rel="stylesheet">
+
+    <script src="/javascripts/ebay_angular.js"></script>
+
+</head>
+<body style="background-color: #f8f8f8" ng-controller="login_controller" ng-cloak>
+
+<div class="col-xs-12" style="height:50px;">
+
+    <!--<img class="center-block" src="http://medias.audiofanzine.com/images/thumbs3/misc-music-audio-gear-1142808.jpg"/>-->
+    <img class="center-block" src="/images/logo.png"
+         style="height:50px;width:118px;margin-top: 47px;margin-bottom: 47px">
+
+
+    <div style="width: 400px; margin: auto;">
+
+
+        <div class="inner" style="width: 400px;margin: auto;">
+
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+                    <!-- tabs -->
+
+                    <ul id="dTab" class="nav nav-tabs">
+                        <li class="active"><a href="#pane2" data-toggle="tab"><span
+                                        class="glyphicon glyphicon-circle-arrow-right"></span> Login</a></li>
+                        <li><a href="#pane1" data-toggle="tab"><span
+                                        class="glyphicon glyphicon-plus"></span> Register</a></li>
+
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="pane1" class="tab-pane fade">
+                            <!--REGISTER PANE-->
+                            <form name="register_form" ng-submit="register()">
+                                <fieldset>
+
+                                    <div class="form-group" style="margin-top: 5%">
+                                        <!--First Name-->
+                                        <input type="text" id="register_fname" name="register_fname"
+                                               ng-model="register_fname"
+                                               placeholder="First Name"
+                                               class="form-control" ng-required="true">
+                                    </div>
+
+                                    <div class="form-group" style="margin-top: 5%">
+                                        <!--Last Name-->
+                                        <input type="text" id="register_lname" name="register_lname"
+                                               ng-model="register_lname"
+                                               placeholder="Last Name"
+                                               class="form-control" ng-required="true">
+                                    </div>
+
+                                    <div class="form-group" style="margin-top: 5%">
+                                        <!--HANDLE-->
+                                        <input type="text" id="register_handle" name="register_handle"
+                                               ng-model="register_handle"
+                                               placeholder="Handle can contain any letters or numbers"
+                                               class="form-control" ng-required="true" pattern=".{4,}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <!--EMAIL-->
+                                        <input type="email" id="register_email" name="register_email"
+                                               ng-model="register_email"
+                                               placeholder="Please provide your E-mail" class="form-control"
+                                               ng-required="true">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <!--PASSWORD-->
+                                        <input type="password" id="register_password" name="register_password"
+                                               ng-model="register_password"
+                                               placeholder="Password should be at least 4 characters"
+                                               class="form-control" ng-required="true" pattern=".{4,}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <!-- Password -->
+
+                                        <input type="password" id="password_confirm" name="password_confirm"
+                                               ng-model="confirm_password"
+                                               placeholder="Please confirm password" class="form-control"
+                                               ng-required="true">
+                                    </div>
+
+
+                                    <button class="btn btn-primary"
+                                            style="background:-webkit-gradient(linear,left top,left bottom,from(#0079bc),to(#00509d));width:100%;font-weight: bold"
+                                            type="submit">Register
+                                    </button>
+
+                                    <div ng-show="invalidRegister" style="margin-top:1%; text-align: center"
+                                         class="alert alert-danger" role="alert">
+                                        <p ng-bind="registererror"></p>
+                                    </div>
+
+                                    <div ng-show="validRegister" style="margin-top:1%; text-align: center"
+                                         class="alert alert-success" role="alert">
+                                        <p ng-bind="registersuccess"></p>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+                        </div>
+
+                        <div id="pane2" class="tab-pane fade in active">
+                            <!-- LOGIN PANE -->
+                            <form name="login_form">
+                                <div class="form-group" style="margin-top: 5%">
+                                    <!--HANDLE-->
+                                    <input type="text" class="form-control" id="signin_handle" name="signin_handle"
+                                           ng-model="signin_handle"
+                                           placeholder="Enter handle" required>
+                                </div>
+                                <div class="form-group">
+                                    <!--PASSWORD-->
+                                    <input type="password" class="form-control" id="signin_password"
+                                           ng-model="signin_password"
+                                           name="signin_password"
+                                           placeholder="Password" required>
+                                </div>
+                                <button class="btn btn-primary"
+                                        style="background:-webkit-gradient(linear,left top,left bottom,from(#0079bc),to(#00509d));width:100%;margin:auto;font-weight: bold"
+                                        ng-click="login()">Sign In
+                                </button>
+
+                                <div ng-show="invalidLogin" style="margin-top:1%; text-align: center"
+                                     class="alert alert-danger" role="alert">Invalid Credentials
+                                </div>
+
+                                <!--<button type="reset" class="btn btn-success" id="forgetBtn">Forget Password</button>-->
+                            </form>
+
+                        </div>
+
+
+                        <!--<div id="pane3" class="tab-pane fade">-->
+                        <!--&lt;!&ndash; password forget &ndash;&gt;-->
+                        <!--<form role="form" action='d_restpassword.php' method="POST">-->
+                        <!--<div class="form-group">-->
+                        <!--<label for="email">Email address</label>-->
+                        <!--<input type="email" class="form-control" id="exampleInputEmail1"-->
+                        <!--placeholder="Request a password reset. Enter your email">-->
+                        <!--</div>-->
+
+                        <!--&lt;!&ndash;<button type="submit" class="btn btn-success">Reset Password</button>&ndash;&gt;-->
+                        <!--<button type="reset" class="btn btn-success" id="loginBtn">Login</button>-->
+
+                        <!--</form>-->
+
+                        <!--</div>-->
+
+
+                    </div>
+
+
+                    <!-- -->
+
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+</body>
+</html>

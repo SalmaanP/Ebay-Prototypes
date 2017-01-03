@@ -1,0 +1,23 @@
+{
+  "name": "Ebay",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "latest",
+    "body-parser": "~1.15.1",
+    "client-sessions": "latest",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.4.1",
+    "express": "~4.13.4",
+    "morgan": "~1.7.0",
+    "mysql": "latest",
+    "serve-favicon": "~2.3.0",
+    "winston": "^2.2.0",
+    "node-cron": "latest",
+    "mocha": "latest"
+  }
+}

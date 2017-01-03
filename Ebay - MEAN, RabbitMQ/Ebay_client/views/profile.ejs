@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ebay">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+
+    <!--<link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet'-->
+    <!--type='text/css'>-->
+
+    <!--<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>-->
+
+
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+    <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+    <link href="/fonts/google_roboto.css" rel="stylesheet">
+    <link href="/fonts/google_sans.css" rel="stylesheet">
+    <link href="/stylesheets/bootstrap3.3.7.min.css" rel="stylesheet">
+    <!--<link href="/stylesheets/font-awesome4.6.3.min.css" rel="stylesheet">-->
+
+    <!--<link href="/stylesheets/styles.css" rel="stylesheet">-->
+    <!--<link href="/stylesheets/new.css" rel="stylesheet">-->
+    <link href="/stylesheets/cart.css" rel="stylesheet">
+    <link href="https://bootswatch.com/lumen/bootstrap.css" rel="stylesheet">
+
+
+
+    <!--<link href="/stylesheets/styles.css" rel="stylesheet">-->
+
+
+</head>
+<body ng-controller="profile_controller" style="background-color: #ededed" ng-cloak>
+
+<nav class="navbar navbar-inverse" style="max-height: 25px">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                <!--<li style=" margin-left:55px"><a ng-href="/profile/{{user_handle}}">Hi {{user_name}}!</a></li>-->
+                <li><a href='' ng-click="navtopostAd()" style=" font-weight:bold; margin-left:55px;">Post Your Ad!</a></li>
+
+
+                <a class="navbar-brand" style="margin-left:200px; position:relative; left:20px; bottom:10px;"
+                   href="" ng-click="navtoRoot()"><img src="/images/logo_128_new_test.png"></a>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+
+                        <input type="text" style="width:400px" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My
+                        eBay<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a ng-click="navtoprofile()" ng-href="/profile/{{user_handle}}">{{user_name}}'s Profile</a></li>
+                        <li><a href="/myAds"  ng-click="navtomyads()">Your Advertisements</a></li>
+                        <li><a href="/myBids"  ng-click="navtomybids()">Bids</a></li>
+                        <li><a href="/myOrders" ng-click="navtomyorders()">Orders</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/profile/{{user_handle}}#login_activity">Login Activity</a></li>
+
+                    </ul>
+                </li>
+                <!--<li><a href="/cart">Cart<i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>-->
+                <li class="active"><a href='' ng-click="navtoCart()">Cart<img style="height: 18px; width:20px;" src="/images/cart.png"
+                                                            aria-hidden="true"></img></a></li>
+                <li data-toggle="tooltip" title=":("><a href="" ng-click="navtosignout()">Sign Out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container" style="padding-top: 10px;">
+    <h1 class="page-header">{{profile_handle}}'s Profile</h1>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="text-center">
+                <img src="/images/profile_pic.png" class="avatar img-circle img-thumbnail" alt="avatar">
+
+            </div>
+        </div>
+        <!-- edit form column -->
+        <div class="col-md-8 col-sm-6 col-xs-12">
+
+            <!--<h3>Personal info</h3>-->
+            <form class="form-horizontal" role="form" >
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Handle</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-init="profile_handle" ng-model="profile_handle" type="text" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">First name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" ng-init="fname" ng-model="fname" type="text" ng-readonly="!ownsPage">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Last name:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" ng-init="lname" ng-model="lname" type="text" ng-readonly="!ownsPage">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Email:</label>
+                    <div class="col-lg-8">
+                        <input class="form-control" ng-init="email" ng-model="email" type="text" ng-readonly="!ownsPage">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Date of Birth</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-init="dob" ng-model="dob" type="text" ng-readonly="!ownsPage">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Address</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-init="address" ng-model="address" type="text" ng-readonly="!ownsPage">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">City</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-init="city" ng-model="city" type="text" ng-readonly="!ownsPage">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Country</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-init="country" ng-model="country" type="text" ng-readonly="!ownsPage">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Zip</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-init="zip" ng-model="zip" type="text" ng-readonly="!ownsPage">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Phone</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-init="phone" ng-model="phone" type="text" ng-readonly="!ownsPage">
+                    </div>
+                </div>
+
+                <div class="form-group" ng-show="ownsPage" id="login_activity">
+                    <label class="col-md-3 control-label">Last Login</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-model="last_login" type="text" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label"></label>
+                    <div class="col-md-8">
+                        <input class="btn btn-primary" ng-show="ownsPage" ng-click="editProfile()" value="Edit Profile" type="button">
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-8">
+                <div ng-show="editSuccess" style="margin-top:1%; text-align: center"
+                     class="alert alert-success" role="alert">
+                    <p> Information Updated Successfully</p>
+                </div>
+                <div ng-show="editFail" style="margin-top:1%; text-align: center"
+                     class="alert alert-success" role="alert">
+                    <p>Failed to update information, please check your input</p>
+                </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+<script src="/javascripts/ebay_angular.js"></script>
+
+
+</body>
+</html>

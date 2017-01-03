@@ -1,0 +1,28 @@
+{
+  "name": "Ebay",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "amqp": "^0.2.6",
+    "bcrypt-nodejs": "latest",
+    "body-parser": "~1.15.1",
+    "client-sessions": "latest",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.4.1",
+    "express": "~4.13.4",
+    "mocha": "latest",
+    "mongoose": "^4.6.4",
+    "mongoose-auto-increment": "^5.0.1",
+    "morgan": "~1.7.0",
+    "mysql": "latest",
+    "node-cron": "latest",
+    "passport": "^0.3.2",
+    "serve-favicon": "~2.3.0",
+    "shortid": "^2.2.6",
+    "winston": "^2.2.0"
+  }
+}

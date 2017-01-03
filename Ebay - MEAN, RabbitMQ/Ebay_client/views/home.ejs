@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html ng-app="ebay">
+
+<head>
+    <title>Ebay</title>
+
+    <!--<link href='http://fonts.googleapis.com/css?family=Roboto:500,300,700,400italic,400' rel='stylesheet'-->
+          <!--type='text/css'>-->
+    <!--<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>-->
+
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"-->
+          <!--integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">-->
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+    <link href='/fonts/google_roboto.css' rel='stylesheet' type='text/css'>
+
+    <link href='/fonts/google_sans.css' rel='stylesheet' type='text/css'>
+
+    <link href="/stylesheets/card.css" rel="stylesheet">
+
+    <link href="/stylesheets/lumen.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color: #ededed" ng-controller="home_controller" ng-cloak>
+
+
+<!--NAVBAR-->
+<nav class="navbar navbar-inverse" style="max-height: 25px">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
+            <ul class="nav navbar-nav">
+                <!--<li style=" margin-left:55px"><a ng-href="/profile/{{user_handle}}">Hi {{user_name}}!</a></li>-->
+                <li><a href='/postAd' ng-click="navtopostAd()" style=" font-weight:bold; margin-left:55px;">Post Your
+                        Ad!</a></li>
+
+
+                <a class="navbar-brand" style="margin-left:200px; position:relative; left:20px; bottom:10px;"
+                   href="/" ng-click="navtoRoot()"><img src="/images/logo_128_new_test.png"></a>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+
+                        <input ng-model="searchString" type="text" style="width:400px" class="form-control" placeholder="Search">
+                    </div>
+                    <button type="submit" ng-click="search()" class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i>
+                    </button>
+                </form>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">My
+                        eBay<span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a ng-click="navtoprofile()" ng-href="/profile/{{user_handle}}">{{user_name}}'s
+                                Profile</a></li>
+                        <li><a href="/myAds" ng-click="navtomyads()">Your Advertisements</a></li>
+                        <li><a href="/myBids" ng-click="navtomybids()">Bids</a></li>
+                        <li><a href="/myOrders" ng-click="navtomyorders()">Orders</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/profile/{{user_handle}}#login_activity">Login Activity</a></li>
+
+                    </ul>
+                </li>
+                <!--<li><a href="/cart">Cart<i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>-->
+                <li class="active"><a href='/cart' ng-click="navtoCart()">Cart<img style="height: 18px; width:20px;"
+                                                                                   src="/images/cart.png"
+                                                                                   aria-hidden="true"></img></a></li>
+                <li data-toggle="tooltip" title=":("><a href="/signOut" ng-click="navtosignout()">Sign Out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!--Main Area-->
+<div class="container">
+
+
+
+    <div class="cards">
+        <div class="card" ng-repeat="ads in advertisements">
+            <a style="text-decoration: none" class="product-link" ng-href="/advertisements/{{ads._id}}">
+                <div class="card-bg"></div>
+                <div class="card-content"><span
+                            style="font-size: 24px; font-weight: 300;">{{ads.name | limitTo : 150}}</span>
+                    <p style="padding-top: 5px; font-size: 16px" class="description">{{ads.description | limitTo:
+                        200}}</p>
+                    <div style="padding-top:10px; font-size: 18px;">${{ads.price}}</div>
+                    <div ng-show="ads.bid_enabled == 1"><h5 style="text-align:right;color: red;">Bidding in progress!</h5></div>
+                    <div ng-show="ads.bid_enabled == 0"><h5 style="text-align:right;color: darkgreen">Available To Buy</h5></div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-sanitize/1.4.8/angular-sanitize.js"></script>
+<script src="/javascripts/ebay_angular.js"></script>
+
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
